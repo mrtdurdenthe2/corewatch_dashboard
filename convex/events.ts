@@ -3,11 +3,8 @@ import { query } from "./_generated/server"
 export const list = query({
   args: {},
   handler: async (ctx) => {
-    const rows = await ctx.db
-      .query("events")
-      .withIndex("by_receivedAtMs")
-      .order("desc")
-      .take(200)
+    // Return a generous slice to avoid missing older rows if the UI expects more.
+    const rows = await ctx.db.query("events").order("desc").take(500)
 
     return rows.map(({ _id, event, url, referrer, userAgent, ip, receivedAtMs, _creationTime }) => ({
       _id,
@@ -16,7 +13,7 @@ export const list = query({
       referrer,
       userAgent,
       ip,
-      receivedAtMs,
+      receivedAtMs: receivedAtMs ?? _creationTime,
       createdAtMs: _creationTime,
     }))
   },

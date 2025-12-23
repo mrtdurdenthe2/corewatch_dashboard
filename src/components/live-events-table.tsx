@@ -19,7 +19,7 @@ export function LiveEventsTable({ events = [] }: LiveEventsTableProps) {
   const hasEvents = events.length > 0
 
   return (
-    <div className="w-full max-w-5xl">
+    <div className="w-full max-w-7xl">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
         Live events
         <ChevronRight className="h-4 w-4" />
@@ -38,34 +38,36 @@ export function LiveEventsTable({ events = [] }: LiveEventsTableProps) {
 
         {/* Event rows */}
         {hasEvents ? (
-          <div className="flex flex-col gap-1">
-            {events.map((eventRow, index) => (
-              <div
-                key={eventRow.id ?? index}
-                className="grid grid-cols-[1.2fr_1.6fr_1.6fr_1.2fr_1fr_1fr] items-start gap-3 rounded bg-[rgba(255,255,255,0.02)] px-2 py-2 font-mono text-[13px] text-white"
-              >
-                <span className="truncate" title={eventRow.event}>
-                  {eventRow.event}
-                </span>
-                <span className="truncate" title={eventRow.url ?? ""}>
-                  {eventRow.url ?? "—"}
-                </span>
-                <span className="truncate" title={eventRow.referrer ?? ""}>
-                  {eventRow.referrer ?? "—"}
-                </span>
-                <span className="truncate" title={eventRow.userAgent ?? ""}>
-                  {eventRow.userAgent ?? "—"}
-                </span>
-                <span className="truncate" title={eventRow.ip ?? ""}>
-                  {eventRow.ip ?? "—"}
-                </span>
-                <span>
-                  {new Date(eventRow.receivedAtMs).toLocaleString(undefined, {
-                    hour12: false,
-                  })}
-                </span>
-              </div>
-            ))}
+          <div className="max-h-[70vh] overflow-y-auto pr-1">
+            <div className="flex flex-col gap-1">
+              {events.map((eventRow, index) => (
+                <div
+                  key={eventRow.id ?? index}
+                  className="grid grid-cols-[1.2fr_1.6fr_1.6fr_1.2fr_1fr_1fr] items-start gap-3 rounded bg-[rgba(255,255,255,0.02)] px-2 py-2 font-mono text-[13px] text-white"
+                >
+                  <span className="truncate" title={eventRow.event}>
+                    {eventRow.event}
+                  </span>
+                  <span className="truncate" title={eventRow.url ?? ""}>
+                    {eventRow.url ?? "—"}
+                  </span>
+                  <span className="truncate" title={eventRow.referrer ?? ""}>
+                    {eventRow.referrer ?? "—"}
+                  </span>
+                  <span className="truncate" title={eventRow.userAgent ?? ""}>
+                    {eventRow.userAgent ?? "—"}
+                  </span>
+                  <span className="truncate" title={eventRow.ip ?? ""}>
+                    {eventRow.ip ?? "—"}
+                  </span>
+                  <span>
+                    {new Date(eventRow.receivedAtMs).toLocaleString(undefined, {
+                      hour12: false,
+                    })}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="flex items-center justify-center rounded bg-black/30 px-3 py-6 text-sm text-[#929292]">
