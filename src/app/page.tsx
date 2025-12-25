@@ -8,8 +8,11 @@ import { LiveEventsTable } from "@/components/live-events-table"
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
-// Prefer the Vercel-provided public Convex URL, fall back to a locally set value.
-const rawConvexUrl = (process.env.CONVEX_DEPLOY_KEY ?? process.env.CONVEX_URL)?.trim()
+// Prefer the Vercel-provided public Convex URL; fall back to a server-side override.
+const rawConvexUrl = (
+  process.env.NEXT_PUBLIC_CONVEX_URL ??
+  process.env.CONVEX_URL
+)?.trim()
 const eventsListRef = "events:list" as unknown as FunctionReference<"query">
 
 function createConvexClient(url: string) {
